@@ -1,0 +1,5 @@
+# Secrets et données des services : ne jamais versionner
+.env
+data/
+plex-config/
+media/

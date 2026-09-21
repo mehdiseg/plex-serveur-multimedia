@@ -1,0 +1,22 @@
+# Plex Media Server dans Docker (image maintenue par LinuxServer.io).
+# Copier .env.exemple en .env, l'adapter, puis :  docker compose up -d
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host            # nécessaire à la découverte des lecteurs du réseau local (DLNA, GDM)
+    environment:
+      - PUID=${PUID:-1000}        # identifiant de l'utilisateur propriétaire des médias (commande : id)
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Europe/Paris}
+      - VERSION=docker            # mises à jour de Plex par l'image
+      - PLEX_CLAIM=${PLEX_CLAIM:-}  # jeton valable 4 minutes : https://www.plex.tv/claim
+    volumes:
+      - ${PLEX_CONFIG:-./plex-config}:/config   # base de données, préférences : À SAUVEGARDER
+      - ${MEDIA_FILMS:-./media/films}:/movies:ro
+      - ${MEDIA_SERIES:-./media/series}:/tv:ro
+      - ${MEDIA_MUSIQUE:-./media/musique}:/music:ro
+    restart: unless-stopped
+    # Transcodage matériel Intel (Quick Sync) : décommenter, si /dev/dri existe sur l'hôte
+    # devices:
+    #   - /dev/dri:/dev/dri
