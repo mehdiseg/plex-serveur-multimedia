@@ -89,6 +89,3 @@ curl -s http://localhost:32400/identity # identité et version du serveur
 - Automatiser la sauvegarde de `plex-config/` avec un script planifié.
 - Mettre le serveur derrière un onduleur et surveiller l'état des disques (SMART).
 
-## Licence
-
-[MIT](LICENSE)
